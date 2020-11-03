@@ -12,13 +12,13 @@ class DetailViewController: UIViewController {
     @IBOutlet var mediaImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var yearLabel: UILabel!
-    @IBOutlet var formatLabel: UILabel!
+    @IBOutlet var seasonsLabel: UILabel!
     @IBOutlet var episodeLabel: UILabel!
-    @IBOutlet var studioLabel: UILabel!
+    @IBOutlet var genresLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var summaryTextView: UITextView!
     
-    var detailItem: Entry? {
+    var detailItem: Shows? {
         didSet{
             //Update the view
             configureView()
@@ -28,11 +28,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    
-        let nav = self.navigationController?.navigationBar
-      
-        nav?.barStyle = UIBarStyle.black
-        nav?.tintColor = UIColor.init(red: 245/255, green: 196/255, blue: 72/255, alpha: 1)
+
         
         title = detailItem?.name
         
@@ -42,28 +38,24 @@ class DetailViewController: UIViewController {
     func configureView() {
         if let entry = detailItem{
             
-            if let thisMediaImage = mediaImage{
+            if let imageView = mediaImage {
                 let url = URL(string: entry.imageURL)
                 let data = try? Data(contentsOf: url!)
-                
-                thisMediaImage.image = UIImage(data: data!)
+                imageView.image = UIImage(data: data!)
             }
             if let thisTitleLabel = titleLabel{
                 thisTitleLabel.text = entry.name
             }
-            if let thisYearLabel = yearLabel{
-                if (entry.yearStart == entry.yearEnd) {
+
+            if let thisYearLabel = yearLabel {
+                if let ended = entry.yearEnd {
+                    thisYearLabel.text = "\(entry.yearStart) - \(ended)"
+                } else {
                     thisYearLabel.text = entry.yearStart
                 }
-                else if (entry.yearEnd != nil && entry.yearEnd != " - ") {
-                    thisYearLabel.text = "\(entry.yearStart) - \(entry.yearEnd ?? "") "
-                }
-                else {
-                thisYearLabel.text = entry.yearStart
-                }
             }
-            if let thisFormatLabel = formatLabel{
-                thisFormatLabel.text = entry.format
+            if let thisSeasonsLabel = seasonsLabel {
+                thisSeasonsLabel.text = "\(entry.seasons) Seasons"
             }
             if let thisEpisodeLabel = episodeLabel{
                 thisEpisodeLabel.text = " "
@@ -76,16 +68,15 @@ class DetailViewController: UIViewController {
                     }
                 }
             }
-            if let thisStudioLabel = studioLabel{
-                thisStudioLabel.text = entry.studio
+            if let thisGenresLabel = genresLabel {
+                thisGenresLabel.text = entry.genres
             }
-            
             //bottom view stuff
-            if let thisDecriptionLabel = descriptionLabel{
-                thisDecriptionLabel.text = entry.description
+            if let thisDescriptionlabel = descriptionLabel {
+                thisDescriptionlabel.text = entry.description
             }
-            if let thisSummaryTextView = summaryTextView{
-                thisSummaryTextView.text = entry.summary
+            if let summaryTextView = summaryTextView {
+                summaryTextView.text = entry.storyLine
             }
         }
         
@@ -101,7 +92,7 @@ class DetailViewController: UIViewController {
         if segue.identifier == "showCastList" {
             
             let controller = segue.destination as! CastTableViewController
-            controller.castListArray = detailItem?.starring
+            controller.castListArray = detailItem?.castSummary
 
 //                let controller = segue.destination as! DetailViewController
 //                controller.detailItem = selectedObject

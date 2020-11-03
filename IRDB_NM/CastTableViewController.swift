@@ -14,11 +14,6 @@ class CastTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let nav = self.navigationController?.navigationBar
-      
-        // 2
-        nav?.barStyle = UIBarStyle.black
-        nav?.tintColor = UIColor.init(red: 245/255, green: 196/255, blue: 72/255, alpha: 1)
     }
 
     // MARK: - Table view data source
@@ -34,10 +29,13 @@ class CastTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "castCell", for: indexPath)
 
-        cell.textLabel?.text = "\(castListArray?[indexPath.row].actorName ?? "")            -as- "
+        // Configure the cell...
         
-        cell.detailTextLabel?.text = castListArray?[indexPath.row].role
-
+        // use the values in the array to make cast list cell pretty
+        cell.textLabel?.text = castListArray?[indexPath.row].actorName
+        //cell.detailTextLabel?.text = castListArray?[indexPath.row].role
+        let Role = "-As-    "
+        cell.detailTextLabel?.text = "\(Role)\(castListArray?[indexPath.row].role ?? "Role")"
         return cell
     }
     
