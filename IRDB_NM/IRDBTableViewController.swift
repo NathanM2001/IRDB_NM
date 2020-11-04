@@ -33,8 +33,8 @@ class IRDBTableViewController: UITableViewController {
 
         // 2
         nav?.barStyle = UIBarStyle.black
-        nav?.tintColor = UIColor.init(red: 62/255, green: 154/255, blue: 170/255, alpha: 2)
-        nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(red: 72/255, green: 174/255, blue: 160/255, alpha: 5)]
+        nav?.tintColor = UIColor.init(red: 75/255, green: 179/255, blue: 190/255, alpha: 2)
+        nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.init(red: 85/255, green: 184/255, blue: 170/255, alpha: 7)]
 
         
         //call dataController and then wait
